@@ -8,7 +8,7 @@ TeaSpeak updater by Nicer (https://github.com/Najsr/TeaSpeak-Updater)
 
 TeaSpeak Updater by essemX (github.com/essemX/teaspeak-updatescript)
 
-Based on theri codes!
+Based on their codes!
 
 NOT Tested YET
 
