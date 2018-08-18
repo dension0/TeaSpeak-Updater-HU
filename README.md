@@ -6,7 +6,7 @@ Special thanks for:
 
 TeaSpeak updater by Nicer (https://github.com/Najsr/TeaSpeak-Updater)
 
-TeaSpeak Updater by essemX (github.com/essemX/teaspeak-updatescript)
+TeaSpeak Updater by essemX (https://github.com/essemX/teaspeak-updatescript)
 
 Based on their codes!
 
