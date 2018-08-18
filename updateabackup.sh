@@ -11,7 +11,7 @@
 #-p path / --path path Sets working path for the script (otherwise executed in the location of the script) example: -p updateshfoldername updateandbackup.sh
 #-s / --start Starts server after successful update via teastart.sh start (you may add name of script with parameters to change this value) example: -s updateandbackup.sh
 
-echo "############### TeaSpeak Updater by dension (based code of Nicer and essemX. THX!) ###############"
+echo "############### TeaSpeak Updater by dension (based code of Nicer and essemX THX!) ###############"
 
 #Define section - start
 
