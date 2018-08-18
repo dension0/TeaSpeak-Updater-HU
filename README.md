@@ -1,8 +1,15 @@
- TeaSpeak-updatebackupscript
+TeaSpeak-updatebackupscript
+
 TeaSpeak update and backup script for Debian linux
 
+Special thanks for:
+
 TeaSpeak updater by Nicer (https://github.com/Najsr/TeaSpeak-Updater)
+
 TeaSpeak Updater by essemX (github.com/essemX/teaspeak-updatescript)
+
+Based on theri codes!
+
 NOT Tested YET
 
 Usege:
