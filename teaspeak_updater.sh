@@ -1,5 +1,5 @@
 #!/bin/bash
-#TeaSpeak updater készítő: Nicer
+#TeaSpeak updater készítő: Najsr (TeaSpeak Fórumon: Nicer)
 #TeaSpeak updater fordította: dension0 (TeaSpeak Fórumon: dension)
 #Tesztelve Debianon
 
