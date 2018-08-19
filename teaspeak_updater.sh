@@ -5,23 +5,23 @@
 
 #Usege:
 #download into based of TeaSpeak folder
-#Add command: chmod u+x updateabackup.sh
-#Run ./updateabackup.sh
-#-f / --force - forces update (without prompt) example: -f updateabackup.sh
-#-p path / --path path Sets working path for the script (otherwise executed in the location of the script) example: -p updateshfoldername updateabackup.sh
-#-s / --start Starts server after successful update via teastart.sh start (you may add name of script with parameters to change this value) example: -s updateabackup.sh
+#Add command: chmod u+x teaspeak_updater.sh
+#Run ./teaspeak_updater.sh
+#-f / --force - forces update (without prompt) example: -f teaspeak_updater.sh
+#-p path / --path path Sets working path for the script (otherwise executed in the location of the script) example: -p updateshfoldername teaspeak_updater.sh
+#-s / --start Starts server after successful update via teastart.sh start (you may add name of script with parameters to change this value) example: -s teaspeak_updater.sh
 
 #Használat:
 #Töltse le a TeaSpeak szerver könyvtárába
-#Parancs: wget https://raw.githubusercontent.com/dension0/TeaSpeak-updatebackupscript/master/updateabackup.sh
+#Parancs: wget https://raw.githubusercontent.com/dension0/TeaSpeak-updatebackupscript/master/teaspeak_updater.sh
 #Jelenlegi felhasználónak addj engedélyt a fájl futtatására
-#Parancs: chmod u+x updateabackup.sh
+#Parancs: chmod u+x teaspeak_updater.sh
 #Futasd a fájlt
-#Parancs: ./updateabackup.sh
+#Parancs: ./teaspeak_updater.sh
 #Kapcsolók
-#-f / --force - erőltetett frissítés, frissítés kérdés nélkül (prompt nélkül) példa: -f updateabackup.sh
-#-p path / --path path A TeaSpeak szerver könyvtárának elérési útja (ha üress a updateabackup.sh fájl könyvtárába frissít) példa: -p updateshfoldername updateabackup.sh
-#-s / --start A frissítés végeztével a TeaSpeak szerver újraindítása a teastart.sh start parancssal (az érték megváltoztatásához megadható a parancsfájl neve paraméterrel együtt) példa: -s updateabackup.sh
+#-f / --force - erőltetett frissítés, frissítés kérdés nélkül (prompt nélkül) példa: -f teaspeak_updater.sh
+#-p path / --path path A TeaSpeak szerver könyvtárának elérési útja (ha üress a teaspeak_updater.sh fájl könyvtárába frissít) példa: -p updateshfoldername teaspeak_updater.sh
+#-s / --start A frissítés végeztével a TeaSpeak szerver újraindítása a teastart.sh start parancssal (az érték megváltoztatásához megadható a parancsfájl neve paraméterrel együtt) példa: -s teaspeak_updater.sh
 
 #color codes from https://raw.githubusercontent.com/Sporesirius/TeaSpeak-Installer/master/teaspeak_install.sh
 function warn() {
