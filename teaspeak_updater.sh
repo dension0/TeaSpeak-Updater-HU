@@ -1,15 +1,7 @@
 #!/bin/bash
-#TeaSpeak updater by Nicer
-#TeaSpeak updater translated by dension0 (on Forum dension)
-#Tested on Debian
-
-#Usege:
-#download into based of TeaSpeak folder
-#Add command: chmod u+x teaspeak_updater.sh
-#Run ./teaspeak_updater.sh
-#-f / --force - forces update (without prompt) example: -f teaspeak_updater.sh
-#-p path / --path path Sets working path for the script (otherwise executed in the location of the script) example: -p updateshfoldername teaspeak_updater.sh
-#-s / --start Starts server after successful update via teastart.sh start (you may add name of script with parameters to change this value) example: -s teaspeak_updater.sh
+#TeaSpeak updater készítő: Nicer
+#TeaSpeak updater fordította: dension0 (TeaSpeak Fórumon: dension)
+#Tesztelve Debianon
 
 #Használat:
 #Töltse le a TeaSpeak szerver könyvtárába
