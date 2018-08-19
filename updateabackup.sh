@@ -1,6 +1,6 @@
 #!/bin/bash
-#TeaSpeak updater by Nicer (https://github.com/Najsr/TeaSpeak-Updater)
-#TeaSpeak Updater by essemX (https://github.com/essemX/teaspeak-updatescript)
+#TeaSpeak updater by Nicer
+#TeaSpeak updater translated by dension0 (on Forum dension)
 #Tested on Debian
 
 #Usege:
@@ -11,12 +11,47 @@
 #-p path / --path path Sets working path for the script (otherwise executed in the location of the script) example: -p updateshfoldername updateandbackup.sh
 #-s / --start Starts server after successful update via teastart.sh start (you may add name of script with parameters to change this value) example: -s updateandbackup.sh
 
-echo "############### TeaSpeak Updater by dension (based code of Nicer and essemX THX!) ###############"
+#Használat:
+#Töltse le a TeaSpeak szerver könyvtárába
+#Parancs: wget https://raw.githubusercontent.com/dension0/TeaSpeak-updatebackupscript/master/updateabackup.sh
+#Jelenlegi felhasználónak addj engedélyt a fájl futtatására
+#Parancs: chmod u+x updateandbackup.sh
+#Futasd a fájlt
+#Parancs: ./updateandbackup.sh
+#Kapcsolók
+#-f / --force - erőltetett frissítés, frissítés kérdés nélkül (prompt nélkül) példa: -f updateandbackup.sh
+#-p path / --path path A TeaSpeak szerver könyvtárának elérési útja (ha üress a updateandbackup.sh fájl könyvtárába frissít) példa: -p updateshfoldername updateandbackup.sh
+#-s / --start A frissítés végeztével a TeaSpeak szerver újraindítása a teastart.sh start parancssal (az érték megváltoztatásához megadható a parancsfájl neve paraméterrel együtt) példa: -s updateandbackup.sh
 
-#Define section - start
+#color codes from https://raw.githubusercontent.com/Sporesirius/TeaSpeak-Installer/master/teaspeak_install.sh
+function warn() {
+    echo -e "\\033[33;1m${@}\033[0m"
+}
 
-#define save folder name
-SAVEFOLDER = "saves"
+function error() {
+    echo -e "\\033[31;1m${@}\033[0m"
+}
+
+function info() {
+    echo -e "\\033[36;1m${@}\033[0m"
+}
+
+function green() {
+    echo -e "\\033[32;1m${@}\033[0m"
+}
+
+function cyan() {
+    echo -e "\\033[36;1m${@}\033[0m"
+}
+
+function red() {
+    echo -e "\\033[31;1m${@}\033[0m"
+}
+
+function yellow() {
+    echo -e "\\033[33;1m${@}\033[0m"
+}
+
 
 #checking for parameters
 POSITIONAL=()
@@ -64,7 +99,7 @@ fi
 
 if [ ! -f "$FOLDER/buildVersion.txt" ] 
 then
-	echo "buildVersion.txt not found, cannot proceed with update!";
+	error "buildVersion.txt not found, cannot proceed with update!";
 	exit 1;
 fi
 
@@ -78,102 +113,45 @@ fi
 latest_version=$(curl -k --silent https://repo.teaspeak.de/server/linux/$arch/latest)
 current_version=$(head -n 1 "$FOLDER/buildVersion.txt")
 current_version=${current_version:11}
-#Define section - stop
 
-#No need update section - start
 if [[ "$latest_version" == "$current_version" ]];
 then
-   echo "##### You are already using latest version of TeaSpeak. Nothing to update :) #####";
+   green "Már a legújabb verziója van telepítve a TeaSpek szervernek. Nincs szükség frissítésre. Nothing to update :)";
    exit 0;
 fi
-#No need update section - stop
 
-#Forced update section - start
 if [[ -z $FORCE ]];
 then
-	read -p "# An update is available, do you want to update?" -n 1 -r
+	read -n 1 -r -s -p "$(yellow Frissítés elérhető. Kívánja telepíteni? [i/n])"
 	echo
-	if [[ ! $REPLY =~ ^[Yy]$ ]];
+	if [[ ! $REPLY =~ ^[Ii]$ ]];
 	then
-		echo "# Aborting update..."
+		error "Frissítés megszakítása"
 		exit 0;
 	fi
 else
-	echo "##### Found new version ($latest_version), starting update #####";
+	info "Új verzió: ($latest_version), frissítési folyamat indítása"
 fi
-#Forced update section - stop
 
-#Stop TeaSpeak server if runing section - start
-echo "##### Checking for running server #####"
+info "Szerver futásának ellenőrzése..."
 if [[ $($FOLDER/teastart.sh status) == "Server is running" ]];
 then
-	echo "# Server is still running! Shutting it down..."
+	info "A szerver jelenleg fut! Leállítás..."
 	$FOLDER/teastart.sh stop
-	echo "# Ready"
 fi
-#Stop TeaSpeak server if runing section - stop
-
-#Download update section - start
-echo "##### Downloading server version $latest_version #####";
+info "Biztonsági mentés készítése a jelenlegi szerverről a TeaSpeakBackup_$current_version.tar.gz fájlba"
+tar -C $FOLDER/ -zcvf TeaSpeakBackup_$current_version.tar.gz config.yml TeaData.sqlite --overwrite >/dev/null
+info "Legújabb verzió letöltése $latest_version";
 wget -q -O /tmp/TeaSpeak.tar.gz https://repo.teaspeak.de/server/linux/$arch/TeaSpeak-$latest_version.tar.gz;
-echo "# Ready";
-#Download update section - stop
-
-#Backup section - start
-echo "##### Saving current config file and database into $SAVEFOLDER/$current_version folder#####";
-cp $FOLDER/config.yml $FOLDER/config.yml.old;
-cp $FOLDER/TeaData.sqlite $FOLDER/TeaData.sqlite.old;
-if [ ! -d "$FOLDER/$SAVEFOLDER" ];
-then
-	mkdir $FOLDER/$SAVEFOLDER
-	echo "# Creating $FOLDER/$SAVEFOLDER folder succesfull!"
-else
-	echo "# Creating ($FOLDER/$SAVEFOLDER) folder unsuccesfull!"
-fi
-
-if [ ! -d "$FOLDER/$SAVEFOLDER/$current_version" ];
-then
-	mkdir $FOLDER/$SAVEFOLDER/$current_version
-	echo "# Creating ($FOLDER/$SAVEFOLDER/$current_version) subfolder succesfull!"
-else
-	echo "# Creating ($FOLDER/$SAVEFOLDER/$current_version) subfolder unsuccesfull!"
-fi
-
-if [ -d "$FOLDER/$SAVEFOLDER/$current_version" ];
-then
-	cp $FOLDER/$SAVEFOLDER/config.yml.old $FOLDER/config.yml
-	cp $FOLDER/$SAVEFOLDER/TeaData.sqlite.old $FOLDER/TeaData.sqlite
-	mv $FOLDER/config.yml.old $FOLDER/$SAVEFOLDER/$current_version
-	mv $FOLDER/TeaData.sqlite.old $FOLDER/$SAVEFOLDER/$current_version
-	echo "# Backup succesfull! Backup folder: $FOLDER/$SAVEFOLDER/$current_version"
-else
-	echo "# Backup unsuccesfull! Backup folder ($FOLDER/$SAVEFOLDER/$current_version) not exist!"
-fi
-#Backup section - end
-
-#Extracting update section - start
-echo "##### Extracting it to $FOLDER/ #####";
+info "Kicsomagolás ide: $FOLDER/";
 tar -C $FOLDER/ -xzf /tmp/TeaSpeak.tar.gz --overwrite
-echo "# Ready";
-#Extracting update section - end
-
-#Remove temp file section - start
-echo "# Removing temporary file";
+info "Ideiglenes fájl törlése";
 rm /tmp/TeaSpeak.tar.gz
-echo "# Ready";
-#Remove temp file section - end
+green "A frissítés sikeresen befejezve!";
 
-#Make scripts executable section - start
-echo "##### Making scripts executable #####"
-chmod u+x $FOLDER/*.sh
-echo "# Ready";
-#Make scripts executable section - end
-
-#Restart TeaSpeak server section - start
 if [[ ! -z $START ]]
 then
-  echo "##### Restart TeaSpeak szerver ##### ";
+  info "Szerver újraindítása";
   $FOLDER/$START;
 fi
-#Restart TeaSpeak server section - end
 exit 0;
