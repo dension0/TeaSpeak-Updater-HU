@@ -91,7 +91,7 @@ fi
 
 if [ ! -f "$FOLDER/buildVersion.txt" ] 
 then
-	error "buildVersion.txt not found, cannot proceed with update!";
+	error "buildVersion.txt fájlt nem találtam, így a frissítési folyamat nem hajtható végre!";
 	exit 1;
 fi
 
@@ -108,7 +108,7 @@ current_version=${current_version:11}
 
 if [[ "$latest_version" == "$current_version" ]];
 then
-   green "Már a legújabb verziója van telepítve a TeaSpek szervernek. Nincs szükség frissítésre. Nothing to update :)";
+   green "Már a legújabb verziója van telepítve a TeaSpek szervernek. Nincs szükség frissítésre. :)";
    exit 0;
 fi
 
@@ -118,11 +118,11 @@ then
 	echo
 	if [[ ! $REPLY =~ ^[Ii]$ ]];
 	then
-		error "Frissítés megszakítása"
+		error "Frissítés megszakítása..."
 		exit 0;
 	fi
 else
-	info "Új verzió: ($latest_version), frissítési folyamat indítása"
+	info "Új verzió: ($latest_version), frissítés indítása..."
 fi
 
 info "Szerver futásának ellenőrzése..."
@@ -131,19 +131,19 @@ then
 	info "A szerver jelenleg fut! Leállítás..."
 	$FOLDER/teastart.sh stop
 fi
-info "Biztonsági mentés készítése a jelenlegi szerverről a TeaSpeakBackup_$current_version.tar.gz fájlba"
+info "Biztonsági mentés készítése a jelenlegi szerverről a TeaSpeakBackup_$current_version.tar.gz fájlba."
 tar -C $FOLDER/ -zcvf TeaSpeakBackup_$current_version.tar.gz config.yml TeaData.sqlite --overwrite >/dev/null
-info "Legújabb verzió letöltése $latest_version";
+info "Legújabb verzió letöltése, verziószám: $latest_version";
 wget -q -O /tmp/TeaSpeak.tar.gz https://repo.teaspeak.de/server/linux/$arch/TeaSpeak-$latest_version.tar.gz;
 info "Kicsomagolás ide: $FOLDER/";
 tar -C $FOLDER/ -xzf /tmp/TeaSpeak.tar.gz --overwrite
-info "Ideiglenes fájl törlése";
+info "Ideiglenes fájl tölése...";
 rm /tmp/TeaSpeak.tar.gz
-green "A frissítés sikeresen befejezve!";
+green "Frissítés sikeresen befejezve!";
 
 if [[ ! -z $START ]]
 then
-  info "Szerver újraindítása";
+  info "Szerver újraindítása...";
   $FOLDER/$START;
 fi
 exit 0;
